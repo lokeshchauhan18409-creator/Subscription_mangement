@@ -1,0 +1,474 @@
+
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+ <   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brightloop | Admin Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fb;
+            color: #1e293b;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 245px;
+            background: #111827;
+            color: white;
+            padding: 25px 18px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: #60a5fa;
+        }
+
+        .sidebar h4 {
+            color: #94a3b8;
+            margin: 22px 10px 12px;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #cbd5e1;
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 28px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 25px;
+        }
+
+        .topbar p {
+            color: #64748b;
+            margin-top: 6px;
+            font-size: 13px;
+        }
+
+        .admin-info {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 9px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .card h2 {
+            margin: 13px 0 8px;
+            font-size: 27px;
+        }
+
+        .card small {
+            color: #16a34a;
+        }
+
+        /* CONTENT GRID */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+        }
+
+        .panel h3 {
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 13px 9px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 12px;
+        }
+
+        th {
+            color: #64748b;
+            background: #f8fafc;
+        }
+
+        .status {
+            padding: 5px 9px;
+            border-radius: 15px;
+            font-size: 11px;
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* QUICK ACTIONS */
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .action-btn {
+            background: #eff6ff;
+            color: #1d4ed8;
+            text-decoration: none;
+            text-align: center;
+            padding: 17px 8px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .action-btn:hover {
+            background: #dbeafe;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        @media(max-width: 1000px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 650px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">Brightloop.</div>
+
+        <h4>MAIN MENU</h4>
+
+        <a href="#overview" class="active">Dashboard</a>
+        <a href="#products">Products</a>
+        <a href="#plans">Subscription Plans</a>
+        <a href="#subscriptions">Subscriptions</a>
+
+        <h4>MANAGEMENT</h4>
+
+        <a href="#staff">Staff Management</a>
+        <a href="#customers">Customers</a>
+        <a href="#invoices">Invoices</a>
+        <a href="#payments">Payments</a>
+
+        <h4>FINANCE</h4>
+
+        <a href="#taxes">Taxes & Discounts</a>
+        <a href="#reports">Revenue Reports</a>
+
+        <h4>ACCOUNT</h4>
+
+        <a href="/logout">Logout</a>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Welcome back, {{ session.get('name', 'Admin') }}!</p>
+            </div>
+
+            <div class="admin-info">
+                Admin Account
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+        <section id="overview" class="cards">
+
+            <div class="card">
+                <p>Active Subscriptions</p>
+                <h2>248</h2>
+                <small>Demo statistic</small>
+            </div>
+
+            <div class="card">
+                <p>Total Revenue</p>
+                <h2>₹4,85,000</h2>
+                <small>Demo statistic</small>
+            </div>
+
+            <div class="card">
+                <p>Outstanding Payments</p>
+                <h2>₹32,500</h2>
+                <small>Demo statistic</small>
+            </div>
+
+            <div class="card">
+                <p>Total Customers</p>
+                <h2>186</h2>
+                <small>Demo statistic</small>
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+        <section class="panel">
+
+            <h3>Quick Actions</h3>
+
+            <div class="actions">
+
+                <a href="#products" class="action-btn">
+                    + Add Product
+                </a>
+
+                <a href="#plans" class="action-btn">
+                    + Create Plan
+                </a>
+
+                <a href="#staff" class="action-btn">
+                    + Add Staff
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <div class="content-grid">
+
+            <!-- SUBSCRIPTIONS -->
+            <section class="panel" id="subscriptions">
+
+                <h3>Recent Subscriptions</h3>
+
+                <table>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Plan</th>
+                        <th>Status</th>
+                    </tr>
+
+                    <tr>
+                        <td>Customer 1</td>
+                        <td>Monthly</td>
+                        <td><span class="status">Active</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Customer 2</td>
+                        <td>Yearly</td>
+                        <td><span class="status">Active</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Customer 3</td>
+                        <td>Monthly</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+
+                </table>
+
+            </section>
+
+
+            <!-- INVOICES -->
+            <section class="panel" id="invoices">
+
+                <h3>Recent Invoices</h3>
+
+                <table>
+                    <tr>
+                        <th>Invoice</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+
+                    <tr>
+                        <td>INV-001</td>
+                        <td>₹5,000</td>
+                        <td><span class="status">Paid</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>INV-002</td>
+                        <td>₹8,000</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>INV-003</td>
+                        <td>₹3,500</td>
+                        <td><span class="status">Paid</span></td>
+                    </tr>
+
+                </table>
+
+            </section>
+
+        </div>
+
+
+        <div class="content-grid">
+
+            <section class="panel" id="products">
+                <h3>Product Management</h3>
+                <p>Manage product names, types, sales prices, cost prices and variants.</p>
+            </section>
+
+            <section class="panel" id="plans">
+                <h3>Subscription Plans</h3>
+                <p>Manage daily, weekly, monthly and yearly subscription plans.</p>
+            </section>
+
+            <section class="panel" id="staff">
+                <h3>Staff Management</h3>
+                <p>Create staff accounts and manage their permissions.</p>
+            </section>
+
+            <section class="panel" id="customers">
+                <h3>Customer Management</h3>
+                <p>View and manage registered customers.</p>
+            </section>
+
+            <section class="panel" id="payments">
+                <h3>Payment Management</h3>
+                <p>Record payments and track outstanding invoices.</p>
+            </section>
+
+            <section class="panel" id="taxes">
+                <h3>Taxes & Discounts</h3>
+                <p>Manage tax rules and discount configurations.</p>
+            </section>
+
+            <section class="panel" id="reports">
+                <h3>Revenue Reports</h3>
+                <p>Review revenue, active subscriptions and overdue invoices.</p>
+            </section>
+
+        </div>
+
+        <footer class="footer">
+            © 2026 Brightloop Software | Subscription Management System
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>
